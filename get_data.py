@@ -3,36 +3,38 @@ import zipfile
 import os
 
 # File IDs from Google Drive
-file_id1 = "134iXRzD1NZdnQsEumos1U2mCsDxI1_8U"  # data1.zip
-file_id2 = "1ZYs5lMixk_iKQINFsFTOsxtzlAhpnHyq"  # data2.zip
+file_id_train = "1ZYs5lMixk_iKQINFsFTOsxtzlAhpnHyq"  # train.zip
+file_id_test = "134iXRzD1NZdnQsEumos1U2mCsDxI1_8U"   # test.zip
 
-# Paths
-zip1_path = "data1.zip"
-zip2_path = "data2.zip"
+# Download paths
+train_zip_path = "train.zip"
+test_zip_path = "test.zip"
 
-# Download URLs
-url1 = f"https://drive.google.com/uc?id={file_id1}"
-url2 = f"https://drive.google.com/uc?id={file_id2}"
+# URLs for direct download
+url_train = f"https://drive.google.com/uc?id={file_id_train}"
+url_test = f"https://drive.google.com/uc?id={file_id_test}"
 
-# Download zip files
-print("Downloading data1.zip (train)...")
-gdown.download(url1, zip1_path, quiet=False)
+# Download ZIPs
+print("Downloading train.zip...")
+gdown.download(url_train, train_zip_path, quiet=False)
 
-print("Downloading data2.zip (test)...")
-gdown.download(url2, zip2_path, quiet=False)
+print("Downloading test.zip...")
+gdown.download(url_test, test_zip_path, quiet=False)
 
-# Extract to correct folders
-print("Extracting to 'train/'...")
-with zipfile.ZipFile(zip1_path, 'r') as zip_ref:
+# Extract ZIPs
+print("Extracting train.zip to 'train/'...")
+with zipfile.ZipFile(train_zip_path, 'r') as zip_ref:
     zip_ref.extractall("train")
 
-print("Extracting to 'test/'...")
-with zipfile.ZipFile(zip2_path, 'r') as zip_ref:
+print("Extracting test.zip to 'test/'...")
+with zipfile.ZipFile(test_zip_path, 'r') as zip_ref:
     zip_ref.extractall("test")
 
-# Optional: delete zip files to save space
-# os.remove(zip1_path)
-# os.remove(zip2_path)
+# Remove ZIPs to save space -- optional (uncomment to improve computional efficieny)
+# os.remove(train_zip_path)
+# os.remove(test_zip_path)
 
-print("Done! Datasets available in 'train/' and 'test/' folders.")
+print("✅ Done! Folders 'train/' and 'test/' are ready."
+
+
 

@@ -3,34 +3,36 @@ import zipfile
 import os
 
 # File IDs from Google Drive
-file_id1 = "134iXRzD1NZdnQsEumos1U2mCsDxI1_8U"
-file_id2 = "1ZYs5lMixk_iKQINFsFTOsxtzlAhpnHyq"
+file_id1 = "134iXRzD1NZdnQsEumos1U2mCsDxI1_8U"  # data1.zip
+file_id2 = "1ZYs5lMixk_iKQINFsFTOsxtzlAhpnHyq"  # data2.zip
 
-# Create data directory
-os.makedirs("data", exist_ok=True)
-
-# Define zip file paths
-zip1_path = "data/data1.zip"
-zip2_path = "data/data2.zip"
+# Paths
+zip1_path = "data1.zip"
+zip2_path = "data2.zip"
 
 # Download URLs
 url1 = f"https://drive.google.com/uc?id={file_id1}"
 url2 = f"https://drive.google.com/uc?id={file_id2}"
 
 # Download zip files
-print("Downloading data1.zip...")
+print("Downloading data1.zip (train)...")
 gdown.download(url1, zip1_path, quiet=False)
 
-print("Downloading data2.zip...")
+print("Downloading data2.zip (test)...")
 gdown.download(url2, zip2_path, quiet=False)
 
-# Extract zip files
-print("Extracting data1.zip...")
+# Extract to correct folders
+print("Extracting to 'train/'...")
 with zipfile.ZipFile(zip1_path, 'r') as zip_ref:
-    zip_ref.extractall("data/data1")
+    zip_ref.extractall("train")
 
-print("Extracting data2.zip...")
+print("Extracting to 'test/'...")
 with zipfile.ZipFile(zip2_path, 'r') as zip_ref:
-    zip_ref.extractall("data/data2")
+    zip_ref.extractall("test")
 
-print("Done! Datasets are in data/data1/ and data/data2/")
+# Optional: delete zip files to save space
+# os.remove(zip1_path)
+# os.remove(zip2_path)
+
+print("Done! Datasets available in 'train/' and 'test/' folders.")
+

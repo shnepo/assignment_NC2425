@@ -34,7 +34,7 @@ with zipfile.ZipFile(test_zip_path, 'r') as zip_ref:
 # os.remove(train_zip_path)
 # os.remove(test_zip_path)
 
-print("✅ Done! Folders 'train/' and 'test/' are ready."
+print("Done! Folders 'train/' and 'test/' are ready.")
 
 
 

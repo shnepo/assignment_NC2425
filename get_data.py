@@ -14,7 +14,7 @@ test_zip = "test.zip"
 # Download if not already present
 def download_file(url, output_path):
     if not os.path.exists(output_path):
-        print(f"📥 Downloading {output_path}...")
+        print(f"Downloading {output_path}...")
         urllib.request.urlretrieve(url, output_path)
         print(f"Downloaded {output_path}")
     else:
@@ -22,7 +22,7 @@ def download_file(url, output_path):
 
 # Extract ZIP with flattening (removes top-level folder)
 def extract_zip_flat(zip_path, target_folder):
-    print(f"📂 Extracting {zip_path} into '{target_folder}/' with flattening...")
+    print(f"Extracting {zip_path} into '{target_folder}/' with flattening...")
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         for member in zip_ref.infolist():
             if member.is_dir():

@@ -1,37 +1,44 @@
-import gdown
-import zipfile
 import os
+import zipfile
+import urllib.request
 
-# File IDs from Google Drive
-file_id_train = "1ZYs5lMixk_iKQINFsFTOsxtzlAhpnHyq"  # train.zip
-file_id_test = "134iXRzD1NZdnQsEumos1U2mCsDxI1_8U"   # test.zip
+# URLs for the ZIP files hosted on GitHub Releases
+train_url = "https://github.com/gabz81y/assignment_NC2425/releases/download/dataset_release/train.zip"
+test_url = "https://github.com/gabz81y/assignment_NC2425/releases/download/dataset_release/test.zip"
 
-# Output filenames
-train_zip_path = "train.zip"
-test_zip_path = "test.zip"
+# Local file names
+train_zip = "train.zip"
+test_zip = "test.zip"
 
-# Direct download URLs
-url_train = f"https://drive.google.com/uc?id={file_id_train}"
-url_test = f"https://drive.google.com/uc?id={file_id_test}"
+# Download if not already present
+def download_file(url, output_path):
+    if not os.path.exists(output_path):
+        print(f"Downloading {output_path}...")
+        urllib.request.urlretrieve(url, output_path)
+        print(f"Downloaded {output_path}")
+    else:
+        print(f"{output_path} already exists, skipping download.")
 
-# Download ZIP files with fuzzy=True to bypass virus scan warning
-print("Downloading train.zip...")
-gdown.download(url_train, train_zip_path, quiet=False, fuzzy=True)
+# Extract if folder doesn't exist
+def extract_zip(zip_path, extract_to):
+    if not os.path.exists(extract_to):
+        print(f"Extracting {zip_path}...")
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(extract_to)
+        print(f"Extracted to '{extract_to}/'")
+    else:
+        print(f"'{extract_to}/' already exists, skipping extraction.")
 
-print("Downloading test.zip...")
-gdown.download(url_test, test_zip_path, quiet=False, fuzzy=True)
+# Run steps
+download_file(train_url, train_zip)
+download_file(test_url, test_zip)
 
-# Extract ZIP files
-print("Extracting train.zip to 'train/'...")
-with zipfile.ZipFile(train_zip_path, 'r') as zip_ref:
-    zip_ref.extractall("train")
+extract_zip(train_zip, "train")
+extract_zip(test_zip, "test")
 
-print("Extracting test.zip to 'test/'...")
-with zipfile.ZipFile(test_zip_path, 'r') as zip_ref:
-    zip_ref.extractall("test")
+# Optional cleanup
+# os.remove(train_zip)
+# os.remove(test_zip)
 
-# Optional: remove ZIP files to save space
-# os.remove(train_zip_path)
-# os.remove(test_zip_path)
+print("🎉 All done! Datasets are ready in 'train/' and 'test/'.")
 
-print("Done! Datasets are ready in 'train/' and 'test/' folders.")
